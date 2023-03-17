@@ -33,7 +33,7 @@ class SeedMakerServiceProvider extends ServiceProvider
         $this->registerResources();
 
         $this->app->singleton('iseed', function($app) {
-            return new Iseed;
+            return new SeedMaker;
         });
 
         $this->app->booting(function() {
@@ -42,7 +42,7 @@ class SeedMakerServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('command.iseed', function($app) {
-            return new IseedCommand;
+            return new SeedMakerCommand;
         });
 
         $this->commands('command.iseed');
