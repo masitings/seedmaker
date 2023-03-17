@@ -1,4 +1,4 @@
-**Inverse seed generator (iSeed)** is a Laravel package that provides a method to generate a new seed file based on data from the existing database table.
+is a Laravel package that provides a method to generate a new seed file based on data from the existing database table.
 
 ## Installation
 
@@ -18,11 +18,11 @@ Use CSV notation for multiple tables. Seed file will be generated for each table
 Examples:
 
 ```
-php artisan iseed my_table
+php artisan seedmaker my_table
 ```
 
 ```
-php artisan iseed my_table,another_table
+php artisan seedmaker my_table,another_table
 ```
 
 ### classnameprefix & classnamesuffix
@@ -33,25 +33,25 @@ This is useful if you want to create an additional seed for a table that has an 
 Examples:
 
 ```
-php artisan iseed my_table --classnameprefix=Customized
+php artisan seedmaker my_table --classnameprefix=Customized
 ```
 
 outputs CustomizedMyTableSeeder.php
 
 ```
-php artisan iseed my_table,another_table --classnameprefix=Customized
+php artisan seedmaker my_table,another_table --classnameprefix=Customized
 ```
 
 outputs CustomizedMyTableSeeder.php and CustomizedAnotherTableSeeder.php
 
 ```
-php artisan iseed my_table --classnamesuffix=Customizations
+php artisan seedmaker my_table --classnamesuffix=Customizations
 ```
 
 outputs MyTableCustomizationsSeeder.php
 
 ```
-php artisan iseed my_table,another_table --classnamesuffix=Customizations
+php artisan seedmaker my_table,another_table --classnamesuffix=Customizations
 ```
 
 outputs MyTableCustomizationsSeeder.php and AnotherTableCustomizationsSeeder.php
@@ -64,7 +64,7 @@ Example:
 The following command will overwrite `UsersTableSeeder.php` if it already exists in laravel's seeds directory.
 
 ```
-php artisan iseed users --force
+php artisan seedmaker users --force
 ```
 
 ### dumpauto
@@ -74,7 +74,7 @@ Optional boolean parameter that controls the execution of `composer dump-autoloa
 Example that will stop `composer dump-autoload` from execution:
 
 ```
-php artisan iseed users --dumpauto=false
+php artisan seedmaker users --dumpauto=false
 ```
 
 ### clean
@@ -84,7 +84,7 @@ Optional parameter which will clean `app/database/seeds/DatabaseSeeder.php` befo
 Example:
 
 ```
-php artisan iseed users --clean
+php artisan seedmaker users --clean
 ```
 
 ### database
@@ -94,7 +94,7 @@ Optional parameter which specifies the DB connection name.
 Example:
 
 ```
-php artisan iseed users --database=mysql2
+php artisan seedmaker users --database=mysql2
 ```
 
 ### max
@@ -104,7 +104,7 @@ Optional parameter which defines the maximum number of entries seeded from a spe
 Example:
 
 ```
-php artisan iseed users --max=10
+php artisan seedmaker users --max=10
 ```
 
 ### chunksize
@@ -114,7 +114,7 @@ Optional parameter which defines the size of data chunks for each insert query.
 Example:
 
 ```
-php artisan iseed users --chunksize=100
+php artisan seedmaker users --chunksize=100
 ```
 
 ### orderby
@@ -124,7 +124,7 @@ Optional parameter which defines the column which will be used to order the resu
 Example:
 
 ```
-artisan iseed users --max=10 --orderby=id
+artisan seedmaker users --max=10 --orderby=id
 ```
 
 ### direction
@@ -134,7 +134,7 @@ Optional parameter which allows you to set the direction of the ordering of resu
 Example:
 
 ```
-artisan iseed users --max=10 --orderby=id --direction=desc
+artisan seedmaker users --max=10 --orderby=id --direction=desc
 ```
 
 ### exclude
@@ -144,8 +144,8 @@ Optional parameter which accepts comma separated list of columns that you'd like
 Example:
 
 ```
-php artisan iseed users --exclude=id
-php artisan iseed users --exclude=id,created_at,updated_at
+php artisan seedmaker users --exclude=id
+php artisan seedmaker users --exclude=id,created_at,updated_at
 ```
 
 ### prerun
@@ -157,19 +157,19 @@ Example:
 The following command will make a seed file which will fire an event named 'someEvent' before seeding takes place.
 
 ```
-php artisan iseed users --prerun=someEvent
+php artisan seedmaker users --prerun=someEvent
 ```
 
 The following example will assign `someUserEvent` to `users` table seed, and `someGroupEvent` to `groups` table seed, to be executed before seeding.
 
 ```
-php artisan iseed users,groups --prerun=someUserEvent,someGroupEvent
+php artisan seedmaker users,groups --prerun=someUserEvent,someGroupEvent
 ```
 
 The following example will only assign a `someGroupEvent` to `groups` table seed, to be executed before seeding. Value for the users table prerun was omitted here, so `users` table seed will have no prerun event assigned.
 
 ```
-php artisan iseed users,groups --prerun=,someGroupEvent
+php artisan seedmaker users,groups --prerun=,someGroupEvent
 ```
 
 ### postrun
@@ -181,19 +181,19 @@ Example:
 The following command will make a seed file which will fire an event named 'someEvent' after seeding was completed.
 
 ```
-php artisan iseed users --postrun=someEvent
+php artisan seedmaker users --postrun=someEvent
 ```
 
 The following example will assign `someUserEvent` to `users` table seed, and `someGroupEvent` to `groups` table seed, to be executed after seeding.
 
 ```
-php artisan iseed users,groups --postrun=someUserEvent,someGroupEvent
+php artisan seedmaker users,groups --postrun=someUserEvent,someGroupEvent
 ```
 
 The following example will only assign a `someGroupEvent` to `groups` table seed, to be executed after seeding. Value for the users table postrun was omitted here, so `users` table seed will have no postrun event assigned.
 
 ```
-php artisan iseed users,groups --postrun=,someGroupEvent
+php artisan seedmaker users,groups --postrun=,someGroupEvent
 ```
 
 ### noindex
@@ -204,12 +204,12 @@ The use case for this feature is when you need to merge two seed files.
 Example:
 
 ```
-php artisan iseed users --noindex
+php artisan seedmaker users --noindex
 ```
 
 ## Usage
 
-To generate a seed file for your users table simply call: `\Iseed::generateSeed('users', 'connectionName', 'numOfRows');`. `connectionName` and `numOfRows` are not required arguments.
+To generate a seed file for your users table simply call: `\seedmaker::generateSeed('users', 'connectionName', 'numOfRows');`. `connectionName` and `numOfRows` are not required arguments.
 
 This will create a file inside a `/database/seeds` (`/app/database/seeds` for Laravel 4), with the contents similar to following example:
 
@@ -271,7 +271,7 @@ class UsersTableSeeder extends Seeder {
 
 This command will also update `/database/seeds/DatabaseSeeder.php` (`/app/database/seeds/DatabaseSeeder.php` for Laravel 4) to include a call to this newly generated seed class.
 
-If you wish you can define custom iSeed template in which all the calls will be placed. You can do this by using `#iseed_start` and `#iseed_end` templates anywhere within `/database/seeds/DatabaseSeeder.php` (`/app/database/seeds/DatabaseSeeder.php` for Laravel 4), for example:
+If you wish you can define custom seedmaker template in which all the calls will be placed. You can do this by using `#seedmaker_start` and `#seedmaker_end` templates anywhere within `/database/seeds/DatabaseSeeder.php` (`/app/database/seeds/DatabaseSeeder.php` for Laravel 4), for example:
 
 ```php
 <?php
@@ -293,28 +293,28 @@ class DatabaseSeeder extends Seeder {
             throw new \Exception('Only run this from production');
         }
 
-        #iseed_start
+        #seedmaker_start
 
         // here all the calls for newly generated seeds will be stored.
 
-        #iseed_end
+        #seedmaker_end
     }
 
 }
 ```
 
-Alternatively you can run Iseed from the command line using Artisan, e.g. `php artisan iseed users`. For generation of multiple seed files comma separated list of table names should be send as an argument for command, e.g. `php artisan iseed users,posts,groups`.
+Alternatively you can run seedmaker from the command line using Artisan, e.g. `php artisan seedmaker users`. For generation of multiple seed files comma separated list of table names should be send as an argument for command, e.g. `php artisan seedmaker users,posts,groups`.
 
-In case you try to generate seed file that already exists command will ask you a question whether you want to overwrite it or not. If you wish to overwrite it by default use `--force` Artisan Command Option, e.g. `php artisan iseed users --force`.
+In case you try to generate seed file that already exists command will ask you a question whether you want to overwrite it or not. If you wish to overwrite it by default use `--force` Artisan Command Option, e.g. `php artisan seedmaker users --force`.
 
-If you wish to clear iSeed template you can use Artisan Command Option `--clean`, e.g. `php artisan iseed users --clean`. This will clean template from `app/database/seeds/DatabaseSeeder.php` before creating new seed class.
+If you wish to clear seedmaker template you can use Artisan Command Option `--clean`, e.g. `php artisan seedmaker users --clean`. This will clean template from `app/database/seeds/DatabaseSeeder.php` before creating new seed class.
 
-You can specify db connection that will be used for creation of new seed files by using Artisan Command Option `--database=connection_name`, e.g. `php artisan iseed users --database=mysql2`.
+You can specify db connection that will be used for creation of new seed files by using Artisan Command Option `--database=connection_name`, e.g. `php artisan seedmaker users --database=mysql2`.
 
-To limit number of rows that will be exported from table use Artisan Command Option `--max=number_of_rows`, e.g. `php artisan iseed users --max=10`. If you use this option while exporting multiple tables specified limit will be applied to all of them.
+To limit number of rows that will be exported from table use Artisan Command Option `--max=number_of_rows`, e.g. `php artisan seedmaker users --max=10`. If you use this option while exporting multiple tables specified limit will be applied to all of them.
 
 To (re)seed the database go to the Terminal and run Laravel's `db:seed command` (`php artisan db:seed`).
 
-Please note that some users encountered a problem with large DB table exports ([error when seeding from table with many records](https://github.com/Masitings/seedmaker/issues/4)). The issue was solved by splitting input data into smaller chunks of elements per insert statement. As you may need to change the chunk size value in some extreme cases where DB table has a large number of columns, the chunk size is configurable in iSeed's `config.php` file:
+Please note that some users encountered a problem with large DB table exports ([error when seeding from table with many records](https://github.com/Masitings/seedmaker/issues/4)). The issue was solved by splitting input data into smaller chunks of elements per insert statement. As you may need to change the chunk size value in some extreme cases where DB table has a large number of columns, the chunk size is configurable in seedmaker's `config.php` file:
 
     'chunk_size' => 500 // Maximum number of rows per insert statement
