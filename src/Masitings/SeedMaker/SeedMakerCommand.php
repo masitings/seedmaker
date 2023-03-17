@@ -25,7 +25,7 @@ class SeedMakerCommand extends Command
     /**
      * Create a new command instance.
      *
-     * @return \Masitings\Iseed\IseedCommand
+     * @return \Masitings\SeedMaker\SeedMakerCommand
      */
     public function __construct()
     {
@@ -49,9 +49,9 @@ class SeedMakerCommand extends Command
      */
     public function fire()
     {
-        // if clean option is checked empty iSeed template in DatabaseSeeder.php
+        // if clean option is checked empty SeedMaker template in DatabaseSeeder.php
         if ($this->option('clean')) {
-            app('iseed')->cleanSection();
+            app('seedmaker')->cleanSection();
         }
 
         $tables = explode(",", $this->argument('tables'));
@@ -94,7 +94,7 @@ class SeedMakerCommand extends Command
             // if file does not exist or force option is turned on generate seeder
             if (!\File::exists($fileName) || $this->option('force')) {
                 $this->printResult(
-                    app('iseed')->generateSeed(
+                    app('seedmaker')->generateSeed(
                         $table,
                         $prefix,
                         $suffix,
@@ -117,7 +117,7 @@ class SeedMakerCommand extends Command
             if ($this->confirm('File ' . $className . ' already exist. Do you wish to override it? [yes|no]')) {
                 // if user said yes overwrite old seeder
                 $this->printResult(
-                    app('iseed')->generateSeed(
+                    app('seedmaker')->generateSeed(
                         $table,
                         $prefix,
                         $suffix,
@@ -158,7 +158,7 @@ class SeedMakerCommand extends Command
     protected function getOptions()
     {
         return array(
-            array('clean', null, InputOption::VALUE_NONE, 'clean iseed section', null),
+            array('clean', null, InputOption::VALUE_NONE, 'clean seedmaker section', null),
             array('force', null, InputOption::VALUE_NONE, 'force overwrite of all existing seed classes', null),
             array('database', null, InputOption::VALUE_OPTIONAL, 'database connection', \Config::get('database.default')),
             array('max', null, InputOption::VALUE_OPTIONAL, 'max number of rows', null),
@@ -205,8 +205,8 @@ class SeedMakerCommand extends Command
         }
 
         // Generate class name and file name
-        $className = app('iseed')->generateClassName($table, $prefix, $suffix);
-        $seedPath = base_path() . config('iseed::config.path');
+        $className = app('seedmaker')->generateClassName($table, $prefix, $suffix);
+        $seedPath = base_path() . config('seedmaker::config.path');
         return [$seedPath . '/' . $className . '.php', $className . '.php'];
     }
 }

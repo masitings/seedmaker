@@ -42,7 +42,7 @@ class SeedMakerServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('command.seedmaker', function($app) {
-            return new SeedMakerCommand;
+            return new SeedMakerCommand();
         });
 
         $this->commands('command.seedmaker');

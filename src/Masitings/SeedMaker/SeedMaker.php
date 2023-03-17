@@ -59,7 +59,7 @@ class SeedMaker
      * @param  string   $prerunEvent
      * @param  string   $postunEvent
      * @return bool
-     * @throws Orangehill\Iseed\TableNotFoundException
+     * @throws Masitings\SeedMaker\TableNotFoundException
      */
     public function generateSeed($table, $prefix=null, $suffix=null, $database = null, $max = 0, $chunkSize = 0, $exclude = null, $prerunEvent = null, $postrunEvent = null, $dumpAuto = true, $indexed = true, $orderBy = null, $direction = 'ASC')
     {
@@ -122,7 +122,7 @@ class SeedMaker
      */
     public function getSeedPath()
     {
-        return base_path() . config('iseed::config.path');
+        return base_path() . config('seedmaker::config.path');
     }
 
     /**
@@ -222,7 +222,7 @@ class SeedMaker
      */
     public function populateStub($class, $stub, $table, $data, $chunkSize = null, $prerunEvent = null, $postrunEvent = null, $indexed = true)
     {
-        $chunkSize = $chunkSize ?: config('iseed::config.chunk_size');
+        $chunkSize = $chunkSize ?: config('seedmaker::config.chunk_size');
 
         $inserts = '';
         $chunks = array_chunk($data, $chunkSize);
@@ -375,16 +375,16 @@ class SeedMaker
     }
 
     /**
-     * Cleans the iSeed section
+     * Cleans the SeedMaker section
      * @return bool
      */
     public function cleanSection()
     {
-        $databaseSeederPath = base_path() . config('iseed::config.path') . '/DatabaseSeeder.php';
+        $databaseSeederPath = base_path() . config('seedmaker::config.path') . '/DatabaseSeeder.php';
 
         $content = $this->files->get($databaseSeederPath);
 
-        $content = preg_replace("/(\#iseed_start.+?)\#iseed_end/us", "#iseed_start\n\t\t#iseed_end", $content);
+        $content = preg_replace("/(\#seedmaker_start.+?)\#seedmaker_end/us", "#seedmaker_start\n\t\t#seedmaker_end", $content);
 
         return $this->files->put($databaseSeederPath, $content) !== false;
         return false;
