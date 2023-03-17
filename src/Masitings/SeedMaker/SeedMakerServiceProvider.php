@@ -74,6 +74,6 @@ class SeedMakerServiceProvider extends ServiceProvider
             $config     = array_replace_recursive($config, $userConfig);
         }
 
-        $this->app['config']->set('iseed::config', $config);
+        $this->app['config']->set('seedmaker::config', $config);
     }
 }

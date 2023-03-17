@@ -397,16 +397,16 @@ class SeedMaker
      */
     public function updateDatabaseSeederRunMethod($className)
     {
-        $databaseSeederPath = base_path() . config('iseed::config.path') . '/DatabaseSeeder.php';
+        $databaseSeederPath = base_path() . config('seedmaker::config.path') . '/DatabaseSeeder.php';
 
         $content = $this->files->get($databaseSeederPath);
         if (strpos($content, "\$this->call({$className}::class)") === false) {
             if (
-                strpos($content, '#iseed_start') &&
-                strpos($content, '#iseed_end') &&
-                strpos($content, '#iseed_start') < strpos($content, '#iseed_end')
+                strpos($content, '#seedmaker_start') &&
+                strpos($content, '#seedmaker_end') &&
+                strpos($content, '#seedmaker_start') < strpos($content, '#seedmaker_end')
             ) {
-                $content = preg_replace("/(\#iseed_start.+?)(\#iseed_end)/us", "$1\$this->call({$className}::class);{$this->newLineCharacter}{$this->indentCharacter}{$this->indentCharacter}$2", $content);
+                $content = preg_replace("/(\#seedmaker_start.+?)(\#seedmaker_end)/us", "$1\$this->call({$className}::class);{$this->newLineCharacter}{$this->indentCharacter}{$this->indentCharacter}$2", $content);
             } else {
                 $content = preg_replace("/(run\(\).+?)}/us", "$1{$this->indentCharacter}\$this->call({$className}::class);{$this->newLineCharacter}{$this->indentCharacter}}", $content);
             }
