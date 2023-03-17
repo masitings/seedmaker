@@ -32,20 +32,20 @@ class SeedMakerServiceProvider extends ServiceProvider
     {
         $this->registerResources();
 
-        $this->app->singleton('iseed', function($app) {
+        $this->app->singleton('seedmaker', function($app) {
             return new SeedMaker;
         });
 
         $this->app->booting(function() {
             $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-            $loader->alias('Iseed', 'Masitings\SeedMaker\Facades\Iseed');
+            $loader->alias('SeedMaker', 'Masitings\SeedMaker\Facades\SeedMaker');
         });
 
-        $this->app->singleton('command.iseed', function($app) {
+        $this->app->singleton('command.seedmaker', function($app) {
             return new SeedMakerCommand;
         });
 
-        $this->commands('command.iseed');
+        $this->commands('command.seedmaker');
     }
 
     /**
@@ -55,7 +55,7 @@ class SeedMakerServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array('iseed');
+        return array('seedmaker');
     }
 
     /**
@@ -65,7 +65,7 @@ class SeedMakerServiceProvider extends ServiceProvider
      */
     protected function registerResources()
     {
-        $userConfigFile    = app()->configPath().'/iseed.php';
+        $userConfigFile    = app()->configPath().'/seed-maker.php';
         $packageConfigFile = __DIR__.'/../../config/config.php';
         $config            = $this->app['files']->getRequire($packageConfigFile);
 
