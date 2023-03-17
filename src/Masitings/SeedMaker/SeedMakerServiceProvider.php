@@ -1,6 +1,6 @@
 <?php
 
-namespace Masitings\Iseed;
+namespace Masitings\SeedMaker;
 
 use Illuminate\Support\ServiceProvider;
 

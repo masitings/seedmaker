@@ -1,12 +1,12 @@
 <?php
 
-namespace Masitings\Iseed;
+namespace Masitings\SeedMaker;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class IseedCommand extends Command
+class SeedMakerCommand extends Command
 {
     /**
      * The console command name.

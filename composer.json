@@ -44,7 +44,7 @@
 	"extra": {
 		"laravel": {
 			"providers": [
-				"Masitings\\SeedMaker\\IseedServiceProvider"
+				"Masitings\\SeedMaker\\SeedMakerServiceProvider"
 			]
 		}
 	},
